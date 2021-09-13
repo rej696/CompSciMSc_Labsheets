@@ -202,4 +202,90 @@ class that it is related to.
 
 ## Lesson 3
 
+### Booleans
+Booleans are data types with one of two data types, usually True or False
 
+### Logical Operators in C
+Logical Operators connect booleans together to identify whether a statement is True or False.
+
+- && : and
+- || : or
+- !  : not
+
+### Bitwise Operators in C
+Bitwise operators compare each bit of the two variables individually to produce
+an output.
+- & : bitwise and
+- | : bitwise or
+- ! : bitwise not
+
+For example
+```c 
+// 5 is 0000 0101 in binary
+int x = 5;
+
+// 11 is 0000 1011 in binary
+int y = 11;
+
+// x & y is 0000 0001 in binary, so prints a value of 1
+printf("bitwise and: %d", x & y);
+
+// x | y is 0000 1111 in binary, so prints a value of 15
+printf("bitwise or: %d", x | y);
+
+// !x is 1111 1010 in binary, so should print a value of 250.
+// Note that this may not be the case depending on the size of the int used
+printf("bitwise not: %d", x!);
+```
+
+### Conditional Operators
+Many languages include `true` and `false`, or varients of them, as built-in
+types.
+
+In C, booleans are represented as integers as either 1 (true) or 0 (false)
+
+The following conditional operators output 1 or 0 depending on the truthyness
+of the condition
+```
+>  : greater than
+<  : less than
+>= : greater than or equal to
+<= : less than or equal to
+== : equality
+!= : not equal
+```
+
+### Control Flow
+
+If statment example
+```c
+int x = 15;
+if (x >= 15) {
+  printf("Amazing!\n");
+} else if (x >= 10) {
+  printf("Good Job!\n");
+} else {
+  printf("Try harder next time\n");
+}
+```
+
+### stdbool.h
+C has a standard bool library which allows you to use boolean literals (`true`,
+`false`)
+
+standard bool does not have a format specifier for printf
+
+```c
+#include <stdbool.h>
+
+if (x > 3) {
+  return true;
+} else {
+  return false;
+}
+```
+
+### Ternary Operators
+```
+int x = <boolean expression> ? <true path> : <false path>;
+```
