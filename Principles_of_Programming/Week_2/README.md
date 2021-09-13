@@ -289,3 +289,123 @@ if (x > 3) {
 ```
 int x = <boolean expression> ? <true path> : <false path>;
 ```
+
+## Lesson 4
+
+### Recursion
+Functions can call themselves. This is known as recursion. Functions which
+perform recursion are recursive.
+
+#### The Base Case
+All correctly constructed recursive functions have a base case that can be
+solved without recursion.
+
+If a recursive function does not reach a base case it is called infinite
+recursion, and eventually the program will crash due to consuming too much of
+the finite memory available.
+
+#### Structure
+Recursive functions are normally structured such that:
+```
+If base case reached:
+  Solve
+Else:
+  Recursively call function
+```
+
+#### Problem Size
+The number of reduction steps a problem is away from the base case is the
+problem size.
+
+#### Defensive programming
+This is the technique of protecting our code against unwanted inputs, such that
+all inputs can be handled by the function without error.
+
+### Stacks
+Stacks are a LIFO data structure.
+
+Every time you call a function, memory is allocated to the call stack to
+parameters and local variables
+
+#### Recursive Fibonacci
+```c
+/* The Fibonacci Sequence*/
+
+int fibonacci (int n)
+{
+    if(n == 0)
+    {
+    return 0;
+    } else if(n == 1)
+    {
+    return 1;
+
+    }else
+    {
+    return fibonacci(n-1) + fibonacci(n-2);
+    }
+}
+```
+
+This recursive implementation of the fibonacci sequence has two base cases, as
+there are two inputs for which the function does not recurse.
+
+## Lesson 5
+
+### Iteration
+
+Iteration is often faster than recursion as you don't need to maintain a call
+stack, and so does not use as much memory.
+
+#### While loop
+```c
+while (condition is true) {
+  statement1;
+  statement2;
+}
+
+int count = 0;
+while (count < 10) {
+  count = count + 1;
+}
+```
+
+To avoid infinite loops, make sure the condition eventually becomes false.
+
+#### Do While loop
+C has do while loops, where the condition is checked after the body of the loop
+is executed
+```c
+int count = 0;
+do {
+  count = count + 1;
+} while (count < 10);
+```
+
+#### For loops
+
+```
+for (initialisation; termination; increment) {
+  statments;
+}
+```
+
+you can declare the increment variable before the loop or in the initialisation
+section
+```c
+// variable declared in initialisation section
+for (int i = 0; i < 10; i++) {
+  printf("%d\n", i);
+}
+
+// variable declared before loop
+int i;
+for (i = 0; i < 10; i++) {
+  printf("%d\n", i);
+}
+```
+
+
+
+
+
