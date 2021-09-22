@@ -305,4 +305,8 @@ fi
 
 Also can use build tools such as [ant](https://www.codejava.net/tools/ant/java-ant-tutorial-for-beginner)
 
+[Tutorials Point for Ant](https://www.tutorialspoint.com/ant/ant_build_files.htm)
+
+[Another Ant tutorial](https://letstalkdata.com/2017/04/java-build-tools-ant-vs-maven-vs-gradle/)
+
 [Java Naming Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html)
