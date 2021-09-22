@@ -9,4 +9,5 @@ Labsheets, Exercises and Notes from the University of Bath Online Computer Scien
 - [ePortfolio](https://engage-portfolio-uk.herokuapp.com/Overview/blocks)
 - [Slack](https://cohort8-sept2021.slack.com/)
 
-![screen-gif](https://giphy.com/embed/13HgwGsXF0aiGY)
+<!-- ![screen-gif](https://giphy.com/embed/13HgwGsXF0aiGY) -->
+<iframe src="https://giphy.com/embed/13HgwGsXF0aiGY" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/13HgwGsXF0aiGY">via GIPHY</a></p>
