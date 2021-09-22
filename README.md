@@ -8,3 +8,5 @@ Labsheets, Exercises and Notes from the University of Bath Online Computer Scien
 - [Samis](https://samis.bath.ac.uk/)
 - [ePortfolio](https://engage-portfolio-uk.herokuapp.com/Overview/blocks)
 - [Slack](https://cohort8-sept2021.slack.com/)
+
+![screen-gif](https://giphy.com/gifs/13HgwGsXF0aiGY)
