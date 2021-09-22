@@ -227,6 +227,8 @@ public class ClockMain {
 
 ## Lesson 3
 
+[Exercise in replit](https://replit.com/@rej696/Week4Exercise2#Main.java)
+
 Java uses 2 stage compilation, called just-in-time compilation.
 
 The stages are as follows:
