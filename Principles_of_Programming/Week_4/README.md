@@ -223,3 +223,86 @@ public class ClockMain {
     }
   }
 }
+```
+
+## Lesson 3
+
+Java uses 2 stage compilation, called just-in-time compilation.
+
+The stages are as follows:
+- Compilation into bytecode (non-hardware specific low level instructions)
+- bytecode compiled and executed at runtime on Java Virtual Machine (JVM)
+
+This technique means syntax errors can be discovered before execution, unlike a
+purely interpreted language.
+
+Additionally, execution can be optimised based on the code currently running,
+rather than the entire program like a traditional compiler.
+
+### Compiling in java
+- Source files : `.java`
+- Bytecode     : `.class`
+- Archive for running on JRE : `.jar`
+
+Compile to bytecode:
+```
+javac HelloWorld.java
+```
+
+Compile multiple files
+```
+javac *.java
+```
+
+Executing Bytecode using Java just-in-time compiler
+```
+java HelloWorld
+```
+
+Create `.jar`
+```
+javac YourApp.java
+jar -cf YourJar.jar YourApp.class
+```
+
+Java packages
+```
+java my.package.HelloWord
+```
+
+### Managing a Java Project
+```
+Project
+|
+|-README.md
+|-src/
+  |-com/
+    |-package/
+      |-Main.java
+      |-Second.java
+|-lib/
+  |-Library.jar
+|-build.sh
+
+```
+
+[Java build script `build.sh`](https://alvinalexander.com/blog/post/java/unix-shell-script-i-use-for-compiling-java-programs/)
+```bash
+#!/bin/bash
+THE_CLASSPATH=
+PROGRAM_NAME=<main>.java
+cd src
+for i in `ls ../lib/*.jar` do
+  THE_CLASSPATH=${THE_CLASSPATH}:$i
+done
+
+javac -classpath ".:${THE_CLASSPATH}" $PROGRAM_NAME
+
+if [ $? -eq 0 ] then
+  echo "Compilation Complete"
+fi
+```
+
+Also can use build tools such as [ant](https://www.codejava.net/tools/ant/java-ant-tutorial-for-beginner)
+
+[Java Naming Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html)
