@@ -312,3 +312,37 @@ Also can use build tools such as [ant](https://www.codejava.net/tools/ant/java-a
 [Another Ant tutorial](https://letstalkdata.com/2017/04/java-build-tools-ant-vs-maven-vs-gradle/)
 
 [Java Naming Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html)
+
+## Lesson 4
+
+[replit exercise](https://replit.com/@rej696/Week4Exercise2#Main.java)
+
+Strings in Java are objects, unlike integers which are primitive types.
+
+This means that Java strings are unions of data and code, and so have methods
+that can be called.
+
+For example, the length function:
+```java
+String example = "Test String";
+int strLen = example.length();
+
+//strings can be concatinated using the `+` operator:
+System.out.println(example + " has length " + strLen);
+```
+
+### String Methods
+Classes in java can implement a `toString()` method that specifies the
+behaviour for string conversion
+
+Java strings are immutable. Methods that modify strings actually return new
+string values.
+
+For example, you must store the output of the method into the variable
+```java
+String example = "Test String";
+example = example.replace("Test", "Another");
+System.out.println(example);
+```
+
+## [LabSheet](https://replit.com/@rej696/Week4LabSheet4#Main.java)
