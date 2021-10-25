@@ -155,3 +155,53 @@ allow and object to be the target of a for-each loop)
 
 [Java Docs](https://docs.oracle.com/en/java/javase/11/)
 
+
+## Lesson 2
+
+[Exercise in replit](https://replit.com/@rej696/Week7Exercise2#Main.java)
+
+### Coupling
+__Coupling__ is a measure of how closely two seperate sections of a program are
+linked. If a class relies on many details of another class, they are _tightly
+coupled_.
+
+Tight coupling makes later code changes more difficult and reduced
+maintainability. Aim for loose coupling in your code. Encapsulation aids in
+producing looser coupled code.
+
+
+Below is an example of some code that is tightly coupled to the `ArrayList` class:
+```java
+public static int sumItems(ArrayList<Integer> list) {
+  int sum = 0;
+  for (int item : list) {
+    sum += item;
+  }
+  return sum;
+}
+```
+
+The method does not use any methods specific to `ArrayList`, and the only
+mechanism being used is the for-each loop. We can change the parameter to the
+`Iterable` interface to allow this behaviour while loosening coupling.
+
+```java
+public static int sumItems(Iterable<Integer> list) {
+  int sum = 0;
+  for (int item : list) {
+    sum += item;
+  }
+  return sum;
+}
+```
+
+### Cohesion
+__Cohesion__ is a measure of the number and diversity of the tasks a piece of
+code has to complete. A unit with a single, well_defined logical task has high
+cohesion.
+
+High Cohesion and Loose Coupling make it easier to read, maintain and reuse code.
+
+- A method is too long if it does more than one task.
+- A class is too complex and can probably be split up if it represents more than
+  one logical entity
