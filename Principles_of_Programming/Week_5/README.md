@@ -63,7 +63,7 @@ ArrayList is also an example of a __Generic__ in java. This is like a template
 in C++, where the value in the angle brackets indicates the type of the
 ArrayList contents.
 
-```
+```java
 import java.util.ArrayList
 
 public class ArrayListTest {

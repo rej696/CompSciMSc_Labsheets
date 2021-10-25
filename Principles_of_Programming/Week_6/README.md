@@ -120,7 +120,7 @@ public class extends Item {
   // ...
 }
 ```
-Java uses the `extends keyword to denote inheritence.
+Java uses the `extends` keyword to denote inheritence.
 
 The child class constructor calls a `super` method that calls the constructor of 
 the superclass to initialise the fields associated with it.

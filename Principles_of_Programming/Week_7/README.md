@@ -93,7 +93,7 @@ Older versions of java did not have method implementations in interfaces, and
 therefore no conflicts caused by the diamond problem.
 
 Newer versions of java (8+) allow default (implemented) methods in interfaces.
-With hte knowledge of the problem this causes for abstract methods, there are
+With the knowledge of the problem this causes for abstract methods, there are
 now a set of rules for resolving conflicts during multiple inheritance with
 interfaces. The simplest of these is a compile error, to indicate to the
 programmer that they must provide their own implementation for the conflicting
