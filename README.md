@@ -2,6 +2,7 @@
 Labsheets, Exercises and Notes from the University of Bath Online Computer Science MSc
 
 ## [Principles of Programming](https://github.com/rej696/CompSciMSc_Labsheets/tree/master/Principles_of_Programming)
+## [Software Engineering 1](https://github.com/rej696/CompSciMSc_Labsheets/tree/master/Software_Engineering_1)
 
 ## Useful Links
 - [Engage](https://engage.bath.ac.uk/learn/my/)
