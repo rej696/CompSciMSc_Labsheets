@@ -78,6 +78,56 @@ Let $N=(Q,\Sigma,\delta,r,F)$ be a non-deterministic finite automaton, where
 	\item $F = \{r\}$
 \end{itemize}
 
+\newpage
+\subsection{Convert NFA to DFA Discussion, Correction}
+The following is an NFA over the alphabet $\{h,e\}$, for the language:
+$$\{w \in \{h,e\}\ast | w \text{ is a repeating pattern of } he \text{ ending in
+either } h \text{ or } e \text{ and accepting the empty string}\}$$
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		% states
+		\node[state, accepting, initial] (r) {$r$};
+		\node[state, right of=r] (q) {$q$};
+		\node[state, accepting, below of=r] (s) {$s$};
+		\node[state, accepting, below of=q] (p) {$p$};
+
+		% transitions
+		\draw (r) edge[bend left, above] node{h} (q)
+		(q) edge[bend left, below] node{e} (r)
+		(q) edge[right] node{e} (p)
+		(p) edge[above] node{h} (s);
+
+	\end{tikzpicture}
+	\caption{Laughing NFA}
+	\label{fig:laughingnfacorrected}
+\end{figure}
+
+ACCEPTS: heh, he, hehehe, heheh, $\varepsilon$
+
+REJECTS: eh, eheh, hheh, heeee, hehheh
+
+Let $N=(Q,\Sigma,\delta,r,F)$ be a non-deterministic finite automaton, where
+
+\begin{itemize}
+	\item[] $Q = \{r, q, p, s\}$
+	\item[] $\Sigma = \{h, e\}$
+	\item[] $\delta : Q \times \Sigma_\varepsilon \to \mathcal{P}(Q)$
+		\begin{itemize}
+			\item[] $\delta(r,h)=\{q\}$
+			\item[] $\delta(r,e)=\emptyset$
+			\item[] $\delta(q,h)=\emptyset$
+			\item[] $\delta(q,e)=\{r, p\}$
+			\item[] $\delta(p,h)=\{s\}$
+			\item[] $\delta(p,e)=\emptyset$
+			\item[] $\delta(s,h)=\emptyset$
+			\item[] $\delta(s,e)=\emptyset$
+		\end{itemize}
+	\item[] $r$ is the initial state
+	\item[] $F = \{r, p, s\}$
+\end{itemize}
+
 \subsection{Convert forum post NFA to DFA}
 The posted NFA accepts any string from the language $\{0, 1\}$ that starts with
 $11$
