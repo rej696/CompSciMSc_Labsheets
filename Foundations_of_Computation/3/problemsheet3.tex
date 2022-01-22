@@ -614,5 +614,348 @@ For example for the regular expression $(a \cup b) a^\ast$:
 \end{itemize}
 
 \subsection{Converting Finite Automata into Regular Expressions}
+The following shows that we can convert any Finite Automata into a regular
+expression.
+
+Given a finite automaton $N$, we first pre-process the automaton into a
+convenient state, in three ways:
+
+We force $N$ to have a single accept state. If it has multiple accept states,
+we modify it with a new accept state, add $\varepsilon$ transitions to the new
+state, and then remove all accept states but the new one.
+
+We force the initial state to have no ingoing transitions. If this is not
+the case, we add a new initial state with an $\varepsilon$ transition to the
+old.
+
+Finally, we similarly force the accept state to have no outgoing transitions.
+If it does, we can create a new accept state, with an $\varepsilon$
+transition.
+
+Next we allow any transition to be labelled with a regular expression rather
+than just a single letter. It must be valid, because we can convert the regular
+expression into its own NFA.
+
+For example, a transition labelled $a \cup b$ is equivalent to two separate
+transitions going from the same state to the same state, labelled a and b. When
+an NFA has transitions like these, it is called a \textbf{generalised
+non-deterministic finite automaton}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		% states
+		\node[state] (x) {$x$};
+		\node[state, right of=x] (y) {$y$};
+
+		% transitions
+		\draw (x) edge[bend left, above] node{$a$} (y)
+		(x) edge[bend right, below] node{$b$} (y);
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		% states
+		\node[state] (x) {$x$};
+		\node[state, right of=x] (y) {$y$};
+
+		% transitions
+		\draw (x) edge[above] node{$a \cup b$} (y);
+	\end{tikzpicture}
+\end{figure}
+
+The general idea of a conversion algorithm is to convert our original NFA with
+multiple states, into a generalised NFA, with only two states and a single
+transition, $\alpha$, where $\alpha$ is some regular expression. At this point,
+$\alpha$ will be the regular expression that represents our original NFA.
+
+We will go through each state, except for the initial state and accept state,
+and remove them all one by one, updating the arrows as necessary to ensure we
+still represent the same language.
+
+First, convert all instances of states with multiple transitions into unions,
+such that there is only either 0 or 1 arrow between any two states.
+
+Now, enumerate all the states from 1 to n, where 1 is the initial state, and n
+is the accept state. We will go through each state from 2 to n minus 1, and
+consider all of the states that have arcs into and out of this state.
+
+Call the current state $i$, and consider every pair of states that have an
+incoming and outgoing arc. We will call these, $j$ and $k$. Note that they might
+be the same state. If there is no arc from $i$ to itself, then we add an arc
+from $j$ to $k$ which \textbf{concatenates} the transitions. So if the original
+transitions are $\alpha$ and $\beta$, we get $\alpha \circ \beta$ as shown:
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		% states
+		\node[state] (j) {$j$};
+		\node[state, right of=j] (i) {$i$};
+		\node[state, right of=i] (k) {$k$};
+
+		% transitions
+		\draw (j) edge[above] node{$\alpha$} (i)
+		(i) edge[above] node{$\beta$} (k)
+		(j) edge[bend left, above] node{$\alpha\beta$} (k);
+	\end{tikzpicture}
+\end{figure}
+
+If there is an arc, from $i$ to itself ($\gamma$), then we can concatenate this
+into the transition in the middle with a star ($\alpha \circ \gamma^\ast \circ
+\beta$):
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		% states
+		\node[state] (j) {$j$};
+		\node[state, right of=j] (i) {$i$};
+		\node[state, right of=i] (k) {$k$};
+
+		% transitions
+		\draw (j) edge[above] node{$\alpha$} (i)
+		(i) edge[above] node{$\beta$} (k)
+		(i) edge[loop below] node {$\gamma$} (i)
+		(j) edge[bend left, above] node{$\alpha\gamma^\ast\beta$} (k);
+	\end{tikzpicture}
+\end{figure}
+
+If adding an arc means that there are now multiple transitions from $j$ to $k$,
+we combine them with a union, as we did earlier i.e.:
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		% states
+		\node[state] (j) {$j$};
+		\node[state, right of=j] (i) {$i$};
+		\node[state, right of=i] (k) {$k$};
+
+		% transitions
+		\draw (j) edge[above] node{$\alpha$} (i)
+		(i) edge[above] node{$\beta$} (k)
+		(j) edge[bend right, below] node{$\zeta$} (k)
+		(j) edge[bend left, above] node{$\alpha\beta$} (k);
+	\end{tikzpicture}
+\end{figure}
+
+Goes to:
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		% states
+		\node[state] (j) {$j$};
+		\node[state, right of=j] (i) {$i$};
+		\node[state, right of=i] (k) {$k$};
+
+		% transitions
+		\draw (j) edge[above] node{$\alpha$} (i)
+		(i) edge[above] node{$\beta$} (k)
+		(j) edge[bend left, above] node{$\alpha\beta \cup \zeta$} (k);
+	\end{tikzpicture}
+\end{figure}
+
+Once we have done this for every pair of states that pass through state $i$, we
+finally delete state $i$, and any transitions going to or from it. Now we move
+on to the next state. We repeat this until there are only the initial and accept
+states left, and a single transition between them labelled with a single regular
+expression. We have proven that this regular expression accepts the same
+language as the finite automata by construction.
+
+
+\subsection{NFA to Regular Expression Example}
+\subsubsection{Example 1}
+NFA for the language $\{0, 1\}$
+
+\begin{itemize}
+	\item[] Initial NFA:
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (j) {};
+				\node[state, right of=j] (i) {};
+				\node[state, accepting, right of=i] (k) {};
+
+				% transitions
+				\draw (j) edge[above] node{1} (i)
+				(i) edge[above] node{0} (k)
+				(j) edge[loop below] node{0,1} (j);
+			\end{tikzpicture}
+		\end{figure}
+
+	\item[] Make sure there are no ingoing transitions to start state:
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (s) {};
+				\node[state, right of=s] (j) {};
+				\node[state, right of=j] (i) {};
+				\node[state, accepting, right of=i] (k) {};
+
+				% transitions
+				\draw (s) edge[above] node{$\varepsilon$} (j)
+				(j) edge[above] node{1} (i)
+				(i) edge[above] node{0} (k)
+				(j) edge[loop below] node{0,1} (j);
+			\end{tikzpicture}
+		\end{figure}
+	
+	\item[] Convert loop to union:
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (s) {};
+				\node[state, right of=s] (j) {};
+				\node[state, right of=j] (i) {};
+				\node[state, accepting, right of=i] (k) {};
+
+				% transitions
+				\draw (s) edge[above] node{$\varepsilon$} (j)
+				(j) edge[above] node{1} (i)
+				(i) edge[above] node{0} (k)
+				(j) edge[loop below] node{$0 \cup 1$} (j);
+			\end{tikzpicture}
+		\end{figure}
+	
+	\item[] Number States:
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (s) {1};
+				\node[state, right of=s] (j) {2};
+				\node[state, right of=j] (i) {3};
+				\node[state, accepting, right of=i] (k) {4};
+
+				% transitions
+				\draw (s) edge[above] node{$\varepsilon$} (j)
+				(j) edge[above] node{1} (i)
+				(i) edge[above] node{0} (k)
+				(j) edge[loop below] node{$0 \cup 1$} (j);
+			\end{tikzpicture}
+		\end{figure}
+	
+	\item[] Consider Paths through 2 (i.e concatenate and star operations)
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (s) {1};
+				\node[state, right of=s] (j) {2};
+				\node[state, right of=j] (i) {3};
+				\node[state, accepting, right of=i] (k) {4};
+
+				% transitions
+				\draw (s) edge[above] node{$\varepsilon$} (j)
+				(j) edge[above] node{1} (i)
+				(i) edge[above] node{0} (k)
+				(s) edge[bend left, above] node{$(0 \cup 1)^\ast \circ 1$} (i)
+				(j) edge[loop below] node{$0 \cup 1$} (j);
+			\end{tikzpicture}
+		\end{figure}
+	
+	\item[] Remove 2
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (s) {1};
+				\node[state, right of=s] (i) {3};
+				\node[state, accepting, right of=i] (k) {4};
+
+				% transitions
+				\draw (s) edge[above] node{$(0 \cup 1)^\ast \circ 1$} (i)
+				(i) edge[above] node{0} (k);
+			\end{tikzpicture}
+		\end{figure}
+	
+	\item[] Consider Paths through 3 (i.e. concatenate and star operations)
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (s) {1};
+				\node[state, right of=s] (i) {3};
+				\node[state, accepting, right of=i] (k) {4};
+
+				% transitions
+				\draw (s) edge[below] node{$(0 \cup 1)^\ast \circ 1$} (i)
+				(s) edge[bend left, above] node{$(0 \cup 1)^\ast \circ 1 \circ 0$} (k)
+				(i) edge[above] node{0} (k);
+			\end{tikzpicture}
+		\end{figure}
+	
+	\item[] Remove 3
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}[
+					node distance=5cm
+				]
+				% states
+				\node[state, initial] (s) {1};
+				\node[state, accepting, right of=s] (k) {4};
+
+				% transitions
+				\draw (s) edge[above] node{$(0 \cup 1)^\ast \circ 1 \circ 0$} (k);
+			\end{tikzpicture}
+		\end{figure}
+\end{itemize}
+
+\subsubsection{Example 2}
+NFA for Any String of X's of Even Length
+
+\begin{itemize}
+	\item[] Initial NFA:
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, accepting, initial] (s) {};
+				\node[state, right of=s] (q) {};
+
+				% transitions
+				\draw (s) edge[bend left, above] node{x} (q)
+				(q) edge[bend left, below] node{x} (s);
+			\end{tikzpicture}
+		\end{figure}
+
+	\item[] Ensure no ingoing transitions to start state
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (p) {};
+				\node[state, accepting, right of=p] (s) {};
+				\node[state, right of=s] (q) {};
+
+				% transitions
+				\draw (s) edge[bend left, above] node{x} (q)
+				(q) edge[bend left, below] node{x} (s)
+				(p) edge[above] node{$\varepsilon$} (s);
+			\end{tikzpicture}
+		\end{figure}
+	
+	\item[] Ensure no outgoing transitions from accept state
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}
+				% states
+				\node[state, initial] (p) {};
+				\node[state, right of=p] (s) {};
+				\node[state, right of=s] (q) {};
+				\node[state, below of=s, accepting] (r) {};
+
+				% transitions
+				\draw (s) edge[bend left, above] node{x} (q)
+				(q) edge[bend left, below] node{x} (s)
+				(p) edge[above] node{$\varepsilon$} (s)
+				(s) edge[right] node{$\varepsilon$} (r);
+			\end{tikzpicture}
+		\end{figure}
+
+\end{itemize}
 
 \end{document}
