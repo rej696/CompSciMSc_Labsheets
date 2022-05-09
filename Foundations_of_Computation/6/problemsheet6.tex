@@ -1,0 +1,203 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={170mm,257mm},
+  left=20mm,
+  top=20mm,
+}
+
+\makeatletter
+\newcommand{\mathleft}{\@fleqntrue\@mathmargin5pt}
+\newcommand{\mathcenter}{\@fleqnfalse}
+\makeatother
+
+\title{Problem Sheet 6}
+\author{Rowan Saunders}
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+\end{titlepage}
+
+\section{Operations Over Context-Free Languages}
+
+\subsection{Proof that Context-Free Languages are closed over the Union
+Operation}
+If two languages ($L_1, L_2$) are context-free, there exist corresponding
+context-free grammars:
+\begin{align*}
+G_1 &= (V_1,\Sigma_1, R_1,S_1)\\
+G_2 &= (V_2,\Sigma_2, R_2,S_2)
+\end{align*}
+
+Now, we construct a grammar $G=(V,\Sigma,R,S)$ that generates $L_1 \cup L_2$
+where:
+\begin{align*}
+V &= V_1 \cup V_2 \cup \{S\} \\
+\Sigma &= \Sigma_1 \cup \Sigma_2 \\
+R &= R_1 \cup R_2 \cup \{S \to S_1, S \to S_2 \}
+\end{align*}
+Where $S$ is a new start variable
+
+Clearly $G$ generates $L_1 \cup L_2$.
+\begin{align*}
+S & \implies S_1 \implies ... (\text{any string from }L(G_1)) \\
+S & \implies S_2 \implies ... (\text{any string from }L(G_2))
+\end{align*}
+This completes the proof for closure of Context-Free Languages under the union
+operation.
+
+\subsection{Proof that Context-Free Languages are closed over the Concatenation
+Operation}
+If two languages ($L_1, L_2$) are context-free, there exist corresponding
+context-free grammars:
+\begin{align*}
+G_1 &= (V_1,\Sigma_1, R_1,S_1)\\
+G_2 &= (V_2,\Sigma_2, R_2,S_2)
+\end{align*}
+
+Now, we construct a grammar $G=(V,\Sigma,R,S)$ that generates $L_1 \circ L_2$
+where:
+\begin{align*}
+V &= V_1 \cup V_2 \cup \{S\} \\
+\Sigma &= \Sigma_1 \cup \Sigma_2 \\
+R &= R_1 \cup R_2 \cup \{S \to S_1S_2 \}
+\end{align*}
+Where $S$ is a new start variable
+
+Clearly $G$ generates $L_1 \circ L_2$.
+$$S \implies S_1S_2 \implies (\text{any string from }L(G_1)) \circ (\text{any
+string from }L(G_2))$$
+This completes the proof for closure of Context-Free Languages under the
+concatenation operation.
+
+\newpage
+\subsection{Proof that Context-Free Languages are closed over the Kleene Star
+Operation}
+If a language $L$ is context-free, there exists a corresponding	
+context-free grammars:
+$$G_1 = (V_1,\Sigma_1, R_1,S_1)$$
+
+Now, we construct a grammar $G=(V,\Sigma,R,S)$ that generates $L^\ast$
+where:
+\begin{align*}
+V &= V_1 \cup \{S\} \\
+\Sigma &= \Sigma_1 \\
+R &= R_1 \cup \{S \to S_1S, S \to \varepsilon \}
+\end{align*}
+Where $S$ is a new start variable
+
+Clearly $G$ generates $L^\ast$.
+\begin{align*}
+S & \implies \varepsilon \\
+S & \implies S_1S \implies (\text{any string from }L(G_1))	\circ (\text{any
+string from }L(G))
+\end{align*}
+This completes the proof for closure of Context-Free Languages under the
+Kleene Star operation.
+
+\newpage
+\section{Pumping Lemma for Context Free Languages}
+Prove the following language is not context-free:
+$$L=\{a^p \in \{a\}^\ast \mid p \text{ is a prime number}\}$$
+
+Assume $L$ is context-free, then the context-free pumping lemma applies, with a
+pumping length of $n$.
+
+Then consider $a^p$ where $p \geq n$ is a prime number.
+
+Then by the lemma, $a^p = uvxyz$ with the usual conditions:
+
+Let $s = |uxz|$, and $r=|vy|$. Notice that $p=s+r$
+
+Then $|uv^ixy^iz| = s+ ir$, and by the context-free pumping lemma, $a^{s+ir} \in
+L$, i.e. $s + ir$ is prime.
+
+Choose a string $w = a^k$ where $k$ is the next prime after the pumping length
+$n$ plus $2$. i.e $|w| = n + 2$.
+
+Therefore, given that $|vxy| \leq n$, $|uz| \geq 2$. Therefore, $|uxz| \geq 2$
+which is equivalent to $s \geq 2$.
+
+Choose $i = s$, therefore $k = s + ir \implies k = s + sr \implies k = s(r + 1)$
+
+Given that $s \geq 2$, $k$ is not prime, and therefore $w \notin L$
+
+\newpage
+\section{Prove that Context-Free Languages are not closed over the Intersection
+Operation}
+
+Given two languages:
+\begin{align*}
+	L_1 &= \{a^k b^k c^j \mid k, j \geq 0 \} \\
+	L_2 &= \{a^j b^k c^k \mid k, j \geq 0 \} 
+\end{align*}
+
+We construct grammars that accept the languages to prove they are context free.
+
+We construct a grammar $G_1=(V_1,\Sigma_1,R_1,S_1)$ that generates $L_1$
+where:
+\mathleft
+\begin{align*}
+	V_1 &= \{S_1, E_1, F_1\} \\
+	\Sigma &= \{a, b, c\} \\
+	R &= \{ \\
+	  & S_1 \to E_1F_1 \\
+	  & E_1 \to aE_1b \mid \varepsilon \\
+		& F_1 \to cF_1 \mid \varepsilon \\
+	\}
+\end{align*}
+Where $S_1$ is the start variable
+
+We construct a grammar $G_2=(V_2,\Sigma_2,R_2,S_2)$ that generates $L_2$
+where:
+\begin{align*}
+	V_2 &= \{S_2, E_2, F_2\} \\
+	\Sigma &= \{a, b, c\} \\
+	R &= \{ \\
+	  & S_2 \to F_2E_2 \\
+	  & E_2 \to bE_2c \mid \varepsilon \\
+		& F_2 \to aF_2 \mid \varepsilon \\
+	\}
+\end{align*}
+Where $S_2$ is the start variable
+
+\mathcenter
+The language $L = L_1 \cap L_2$, is:
+$$L = \{a^k b^k c^k \mid k \geq 0 \}$$
+
+$L$ can be proven to not be a context free language by the pumping lemma.
+
+Assume $L$ is context free, then the pumping lemma applies, which some pumping
+length $n$.
+
+Consider $w = a^n b^n c^n$, the length $|w|=3n$ which is greater than $n$, so we
+can apply the pumping lemma.
+$$w = uvxyz$$
+
+Since $|vxy| \leq n$, one of the following must be true:
+\begin{quote}
+$vy$ does not contain any $c$ symbols
+
+or 
+
+$vy$ does not contain any $a$ symbols
+\end{quote}
+
+Consider $yv^2xy^2z$. The number of $a,b,c$ symbols cannot be equal.
+
+The lemma says $yv^2xy^2z \in L$. This is a contradiction, so $L$ must not be
+context-free.
+
+Therefore the context free languages are not closed under the pumping lemma.
+
+\end{document}
