@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={170mm,257mm},
+  left=20mm,
+  top=20mm,
+}
+
+\makeatletter
+\newcommand{\mathleft}{\@fleqntrue\@mathmargin5pt}
+\newcommand{\mathcenter}{\@fleqnfalse}
+\makeatother
+
+\title{Labsheet 1.3}
+\author{Rowan Saunders}
+\begin{document}
+
+\maketitle
+
+\section{Exercise 1}
+\begin{itemize}
+  \item[a)] $x$ is a variable
+  \item[b)] $\lambda x.x$ is an abstraction
+  \item[c)] $(\lambda a.z)a$ is an application
+  \item[d)] $\lambda a.za$ is an abstraction
+  \item[e)] $(\lambda n.n)z$ is an application
+  \item[f)] $\lambda z.(\lambda y.(\lambda x.x)y)z$ is an abstraction
+  \item[g)] $(\lambda t.((\lambda t.(\lambda t.t)t)t))t$ is an application
+\end{itemize}
+
+\section{Exercise 2}
+\begin{itemize}
+  \item[a)] $(\lambda x.xy)[\lambda z.z / y] == (\lambda x.x(\lambda z.z))$
+  \item[b)] $(\lambda x.xy)[\lambda z.zx / y] \to_\alpha (\lambda w.wy)[\lambda
+    z.zx / y] == \lambda w.w(\lambda z.zx)$
+  \item[c)] $(f(\lambda x.yx)yx)[fy / x] \to_\alpha (f (\lambda z.yz)yx)[fy / x]
+    == (f(\lambda z.yz)y(fy))$
+  \item[d)] $(\lambda f.f(\lambda x.yx)yx)[fy / x] \to_\alpha (\lambda
+    z.z(\lambda w.yw)yx)[fy / x] == (\lambda z.z(\lambda w.yw)y(fy))$
+\end{itemize}
+
+\section{Exercise 3}
+\begin{itemize}
+  \item[a)] $(\lambda x.\lambda y.x) yx \to_\beta (\lambda z.y)x$
+  \item[b)] $(\lambda f.f(\lambda x.x))(\lambda y.z) \to_\beta (\lambda
+    y.z)(\lambda x.x)$
+  \item[c)] $(\lambda x.\lambda y.yx)(\lambda x.xy) \to_\alpha (\lambda
+    w.\lambda z.zw)(\lambda x.xy) \to_\beta \lambda z.z(\lambda x.xy)$
+  \item[d)] $(\lambda x.xx)((\lambda y.y)(\lambda x.x)) \to_\beta (\lambda
+    x.xx)(\lambda x.x) \to_\beta (\lambda x.x)(\lambda x.x) \to_\beta \lambda
+    x.x$
+  \item[e)] $(\lambda x.xx)(\lambda y.y)(\lambda x.x) \to_\beta (\lambda
+    y.y)(\lambda y.y)(\lambda x.x) \to_\beta (\lambda y.y)(\lambda x.x)
+    \to_\beta (\lambda x.x)$
+  \item[f)] $(\lambda x.xx)(\lambda x.xx)((\lambda y.y)(\lambda x.x)) \to_\beta
+    (\lambda x.xx)(\lambda x.xx)(\lambda x.x) \to_\beta (\lambda x.xx)(\lambda
+    x.xx)(\lambda x.x) \to_\beta$
+    $(\lambda x.xx)(\lambda x.xx)(\lambda x.x)
+    \to_\beta ...$
+\end{itemize}
+
+\section{Exercise 4}
+\subsection{a)}
+$$ M = (\lambda x.\lambda y.xy)z) \to_\beta (\lambda y.zy)$$
+$$ N = (\lambda x.x)(\lambda y.zy) \to_\beta (\lambda y.zy)$$
+$$ P = (\lambda y.zy)$$
+
+\subsection{b)}
+
+
+
+\end{document}
