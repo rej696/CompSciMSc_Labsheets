@@ -1,0 +1,51 @@
+true = \x.\y.x
+false = \x.\y.y
+
+ifthen = \b.\m.\n.bmn
+
+or  = \m.\n.ifthen m true n
+    = \z.\w.(\b.\m.\n.bmn)z(\x.\y.x)w
+  ->b \z.\w.(\m.\n.zmn)(\x.\y.x)w
+  ->b \z.\w.(\n.z(\x.\y.x)n)w
+  ->b \z.\w.z(\x.\y.x)w
+  ->b \z.\w.z(\y.w)
+
+and = \m.\n.ifthen m n false
+    = \z.\w.(\b.\m.\n.bmn)zw(\x.\y.y)
+  ->b \z.\w.(\m.\n.zmn)w(\x.\y.y)
+  ->b \z.\w.(\n.zwn)(\x.\y.y)
+  ->b \z.\w.zw(\x.\y.y)
+
+
+0 = (\f.\x.x)
+1 = (\f.\x.fx)
+2 = (\f.\x.f(fx))
+
+succ = (\n.\f.\x.f(nfx))
+
+succ 0 = (\n.\f.\x.f(nfx))(\f.\x.x)
+  ->a (\n.\f.\x.f(nfx))(\z.\y.y)
+  ->b \f.\x.f(\z.\y.y)fx
+  ->b \f.\x.f(\y.y)x
+  ->b \f.\x.fx
+  == 1
+
+pred = \n.\f.\x.n(\g.\h.h(gf))(\u.x)(\u.u)
+
+pred 2 = (\n.\f.\x.n(\g.\h.h(gf))(\u.x)(\u.u)(\f.\x.f(fx))
+  ->a (\n.\f.\x.n(\g.\h.h(gf))(\u.x)(\u.u)(\z.\y.z(zy))
+  ->b \f.\x.(\z.\y.z(zy))(\g.\h.h(gf))(\u.x)(\u.u)
+  ->b \f.\x.(\z.\y.z(zy))(\g.\h.h(gf))(\u.x)(\u.u)
+  ->b \f.\x.(\y.(\g.\h.h(gf))((\g.\h.h(gf))y))(\u.x)(\u.u)
+  ->b \f.\x.((\g.\h.h(gf))((\g.\h.h(gf))(\u.x)))(\u.u)
+  ->b \f.\x.((\h.h(((\g.\h.h(gf))(\u.x))f)))(\u.u)
+  ->b \f.\x.((\h.h(((\h.h((\u.x)f)))f)))(\u.u)
+  ->b \f.\x.((\h.h(((\h.h(x)))f)))(\u.u)
+  ->b \f.\x.((\h.h(f(x))))(\u.u)
+  ->b \f.\x.(\u.u)(f(x))
+  ->b \f.\x.fx
+  == 1
+
+
+-- Labsheet 3
+
