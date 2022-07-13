@@ -1,0 +1,94 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={170mm,257mm},
+  left=20mm,
+  top=20mm,
+}
+
+\makeatletter
+\newcommand{\mathleft}{\@fleqntrue\@mathmargin5pt}
+\newcommand{\mathcenter}{\@fleqnfalse}
+\makeatother
+
+\title{Labsheet 1.3}
+\author{Rowan Saunders}
+\begin{document}
+
+\maketitle
+
+\section{Exercise 1}
+
+\begin{align*}
+  S &= \lambda xyz.xz(yz)\\
+  K &= \lambda xy.x\\
+  I &= \lambda x.x\\
+\end{align*}
+
+\subsection{a)}
+
+\begin{align*}
+  SKK &= (\lambda xyz.xz(yz))(\lambda xy.x)(\lambda xy.x)\\
+  &\to_\alpha (\lambda xwz.xz(wz))(\lambda xy.x)(\lambda xy.x)\\
+  &\to_\beta (\lambda wz.(\lambda xy.x)z(wz))(\lambda xy.x)\\
+  &\to_\beta (\lambda z.(\lambda xy.x)z((\lambda xy.x)z))\\
+  &\to_\beta (\lambda z.(\lambda xy.x)z(\lambda y.z))\\
+  &\to_\beta (\lambda z.(\lambda y.z)(\lambda y.z))\\
+  &\to_\beta (\lambda z.z)\\
+\end{align*}
+
+\subsection{b)}
+
+\begin{align*}
+  SIK =& (\lambda xyz.xz(yz))IK\\
+  \to_\beta& (\lambda yz.Iz(yz))K\\
+  \to_\beta& (\lambda z.Iz(Kz))\\
+  =& (\lambda z.Iz((\lambda xy.x)z))\\
+  \to_\beta& (\lambda z.Iz(\lambda y.z))\\
+  =& (\lambda z.(\lambda x.x)z(\lambda y.z))\\
+  \to_\beta& (\lambda z.z(\lambda y.z))\\
+\end{align*}
+
+\subsection{c)}
+
+\begin{align*}
+  SSS =& (\lambda xyz.xz(yz))SS\\
+  \to_\beta& (\lambda yz.Sz(yz))S\\
+  \to_\beta& (\lambda z.Sz(Sz))\\
+  =& (\lambda z.(\lambda xyw.xw(yw))z(Sz))\\
+  \to_\beta& (\lambda z.(\lambda yw.zw(yw))(Sz))\\
+  \to_\beta& (\lambda z.(\lambda w.zw((Sz)w)))\\
+  =& (\lambda z.(\lambda w.zw(((\lambda xyk.xk(yk))z)w)))\\
+  \to_\beta& (\lambda z.(\lambda w.zw((\lambda yk.zk(yk))w)))\\
+  \to_\beta& (\lambda z.(\lambda w.zw(\lambda k.zk(wk))))\\
+  =& (\lambda zw.zw(\lambda k.zk(wk)))\\
+\end{align*}
+
+\section{Exercise 2}
+
+Let $W$ be the term:
+$$ \lambda x.\lambda y.xyy $$
+
+\subsection{a)}
+\begin{align*}
+  WW =& (\lambda xy.xyy)(\lambda xy.xyy)\\
+  \to_\alpha& (\lambda zw.zww)(\lambda xy.xyy)\\
+  \to_\beta& (\lambda w.(\lambda xy.xyy)ww)\\
+  \to_\beta& (\lambda w.(\lambda y.wyy)w)\\
+  \to_\beta& (\lambda w.www)\\
+\end{align*}
+
+\subsection{b)}
+The term $WWW$ can be reduced to $(\lambda w.www)W$ which with one further beta reduction reduces back to $WWW$
+This tells us that $WWW$ does not have a normal form and will only ever reduce to itself.
+
+\end{document}
