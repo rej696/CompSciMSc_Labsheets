@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{float}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={170mm,257mm},
+  left=20mm,
+  top=20mm,
+}
+
+\makeatletter
+\newcommand{\mathleft}{\@fleqntrue\@mathmargin5pt}
+\newcommand{\mathcenter}{\@fleqnfalse}
+\makeatother
+
+\title{Labsheet 4.2}
+\author{Rowan Saunders}
+\begin{document}
+
+\maketitle
+
+\section{Exercise 1}
+
+\begin{align*}
+  & (\lambda fx.ffx)(\lambda a.((\lambda x.x)((\lambda y.y)((\lambda z.z)a))))\\
+\end{align*}
+
+\subsection{a)}
+
+\begin{align*}
+  & (\lambda fx.ffx)(\lambda a.((\lambda x.x)((\lambda y.y)((\lambda z.z)a))))\\
+  \to_\beta& \lambda x.(\lambda a.((\lambda z.z)((\lambda y.y)((\lambda z.z)a))))(\lambda a.((\lambda z.z)((\lambda y.y)((\lambda z.z)a))))x\\
+  \to_\beta& \lambda x.(\lambda a.((\lambda z.z)((\lambda y.y)((\lambda z.z)a))))(\lambda a.((\lambda z.z)((\lambda y.y)((\lambda z.z)a))))x\\
+\end{align*}
+
+
+\subsection{b)}
+
+\begin{align*}
+  & (\lambda fx.ffx)(\lambda a.((\lambda x.x)((\lambda y.y)((\lambda z.z)a))))\\
+\end{align*}
+
+\end{document}
